@@ -128,6 +128,9 @@ private:
 	 * VR Inputs
 	 */
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"), Category = "InputSetup|Inputs|VR")
+	UInputAction* IA_MenuToggleVR;
+	
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"), Category = "InputSetup|Inputs|VR")
 	UInputAction* IA_Move;
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"), Category = "InputSetup|Inputs|VR")
@@ -135,10 +138,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"), Category = "InputSetup|Inputs|VR")
 	UInputAction* IA_SitStand;
-
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"), Category = "InputSetup|Inputs|VR")
-	UInputAction* IA_MenuToggle;
-
+	
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"), Category = "InputSetup|Inputs|VR")
 	UInputAction* IA_Teleport;
 	

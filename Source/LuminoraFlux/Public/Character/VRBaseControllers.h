@@ -21,6 +21,7 @@ class USkeletalMeshComponent;
 class UWidgetInteractionComponent;
 class UMotionControllerComponent;
 class UNiagaraComponent;
+class UWidgetComponent;
 
 UCLASS()
 class LUMINORAFLUX_API AVRBaseControllers : public AActor
@@ -51,6 +52,7 @@ public:
 	void LeftGrabCompleted();
 	void RightGrabStarted();
 	void RightGrabCompleted();
+	void DestroyActor();
 
 	UPROPERTY()
 	UVRControllerAnimInstance* ControllerAnimInstance;
@@ -63,6 +65,10 @@ private:
 	/**
 	 * Private Variables
 	 */
+	FTimerHandle OffTimer;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Widget Properties")
+	UWidgetComponent* Data;
 	
 	UPROPERTY()
 	FRotator LRotation;

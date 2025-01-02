@@ -47,11 +47,11 @@ void AIkarusPlayerController::SetupInputComponent()
 
 	if(UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
+		EnhancedInputComponent->BindAction(IA_MenuToggleVR,ETriggerEvent::Started, this, &AIkarusPlayerController::MenuToggle);
 		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AIkarusPlayerController::Move);
 		EnhancedInputComponent->BindAction(IA_Turn, ETriggerEvent::Started, this, &AIkarusPlayerController::SnapTurn);
 		EnhancedInputComponent->BindAction(IA_Turn, ETriggerEvent::Triggered, this, &AIkarusPlayerController::SmoothTurn);
 		EnhancedInputComponent->BindAction(IA_SitStand, ETriggerEvent::Started, this, &AIkarusPlayerController::SitStand);
-		EnhancedInputComponent->BindAction(IA_MenuToggle, ETriggerEvent::Started, this, &AIkarusPlayerController::MenuToggle);
 		EnhancedInputComponent->BindAction(IA_Teleport, ETriggerEvent::Started, this, &AIkarusPlayerController::TeleportStarted);
 		EnhancedInputComponent->BindAction(IA_Teleport, ETriggerEvent::Triggered, this, &AIkarusPlayerController::TeleportTriggering);
 		EnhancedInputComponent->BindAction(IA_Teleport, ETriggerEvent::Completed, this, &AIkarusPlayerController::TeleportCompleted);

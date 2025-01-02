@@ -12,6 +12,7 @@
 #include "NiagaraComponent.h"
 #include "NiagaraDataInterfaceArrayFunctionLibrary.h"
 #include "Character/VRControllerAnimInstance.h"
+#include "Components/WidgetComponent.h"
 #include "Components/WidgetInteractionComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "Kismet/GameplayStatics.h"
@@ -140,26 +141,39 @@ void AVRBaseControllers::TeleportCompleted()
 void AVRBaseControllers::SpawnMenu()
 {
 	MenuRef = GetWorld()->SpawnActor(BP_Menu);
-
-	const FAttachmentTransformRules SnapRules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, true);
-	MenuRef->AttachToComponent(MotionController, SnapRules);
+	const FAttachmentTransformRules SnapRules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, true);
+	MenuRef->AttachToComponent(ControllerMesh, SnapRules);
+	//Data = Cast<UWidgetComponent>(MenuRef->GetComponentByClass(UWidgetComponent::StaticClass()));
+	GetWorldTimerManager().SetTimer(OffTimer, this, &AVRBaseControllers::DestroyActor, 3.0f, false);
 }
 
 void AVRBaseControllers::MenuToggle()
 {
+	
 	if(HandType == EHandType::EHT_LeftHand)
 	{
+		
 		if(MenuRef == nullptr)
 		{
+			//GEngine->AddOnScreenDebugMessage(-1,2,FColor::Cyan,TEXT("HELLLLOOO"));
 			SpawnMenu();
 		}
 		else
 		{
-			MenuRef->Destroy();
+			//GEngine->AddOnScreenDebugMessage(-1,2,FColor::Red,TEXT("(0000000)"));
+			DestroyActor();
+			MenuRef = nullptr;
 		}
 	}
 }
-
+void AVRBaseControllers::DestroyActor()
+{
+	if(MenuRef!=nullptr	)
+	{
+		MenuRef->Destroy();
+		MenuRef = nullptr;
+	}
+}
 void AVRBaseControllers::LeftGrabStarted()
 {
 	LRotation = ControllerMesh->GetRelativeRotation();
@@ -230,6 +244,9 @@ void AVRBaseControllers::RightGrabCompleted()
 		}
 	}
 }
+
+
+
 UVRGrabComponent* AVRBaseControllers::GetGrabComponent(UMotionControllerComponent* MotionControllerRef)
 {
 	const FVector GrabPosition = MotionControllerRef->GetComponentLocation();
